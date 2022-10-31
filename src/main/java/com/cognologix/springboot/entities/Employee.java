@@ -1,4 +1,5 @@
 package com.cognologix.springboot.entities;
+import com.cognologix.springboot.dto.employee.EmployeeDTO;
 import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -23,5 +24,10 @@ public class Employee  implements Serializable {
     @NotBlank
     @Column(name = "salary")
     private float salary;
+
+    public Employee(EmployeeDTO e){
+        this.setName(e.getName());
+        this.setSalary(e.getSalary());
+    }
 
 }

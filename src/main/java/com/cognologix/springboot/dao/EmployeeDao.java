@@ -3,4 +3,5 @@ import com.cognologix.springboot.entities.Employee;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface EmployeeDao extends JpaRepository<Employee, Integer> {
+    Employee findEmployeeByName(String name);
 }
