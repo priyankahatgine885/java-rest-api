@@ -1,6 +1,6 @@
 package com.cognologix.springboot.controller;
+import com.cognologix.springboot.dto.BaseResponse;
 import com.cognologix.springboot.dto.employee.EmployeeDTO;
-import com.cognologix.springboot.dto.employee.EmployeeListResponse;
 import com.cognologix.springboot.dto.employee.EmployeeResponse;
 import com.cognologix.springboot.entities.Employee;
 import com.cognologix.springboot.exception.RecordNotFoundException;
@@ -17,11 +17,13 @@ public class EmployeeController {
     private EmployeeService employeeService;
 
     @GetMapping("/employee")
-    public ResponseEntity<EmployeeListResponse> getEmployees() {
-        EmployeeListResponse empList = this.employeeService.getEmployees();
-        HttpStatus statusCode = empList.getSuccess() ? HttpStatus.OK : HttpStatus.NO_CONTENT;
-        return new ResponseEntity<>(empList, statusCode);
+    public ResponseEntity<BaseResponse> getEmployees() {
+        BaseResponse response = this.employeeService.getEmployees();
+        response.setMessage("'GET method' received request ");
+        HttpStatus statusCode = response.getSuccess() ? HttpStatus.OK : HttpStatus.NO_CONTENT;
+        return new ResponseEntity<>(response, statusCode);
     }
+
     @GetMapping("/employee/{id}")
     public ResponseEntity<Employee> getEmployeeById(@PathVariable int id) throws RecordNotFoundException {
         if ((id <= 0)) {
@@ -32,20 +34,20 @@ public class EmployeeController {
     }
 
     @PostMapping("/employee")
-    public ResponseEntity<EmployeeResponse> addEmployee(@RequestBody EmployeeDTO employee) {
-        EmployeeResponse emp = this.employeeService.addEmployee(employee);
-        emp.setMessage("Employee created successfully");
-        final HttpStatus statusCode = emp.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-        return new ResponseEntity<>(emp, statusCode);
+    public ResponseEntity<BaseResponse> addEmployee(@RequestBody EmployeeDTO employee) {
+        BaseResponse response = this.employeeService.addEmployee(employee);
+        response.setMessage("'POST method' received request ");
+        final HttpStatus statusCode = response.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(response, statusCode);
     }
 
     @PutMapping("/employee/{id}")
-    public ResponseEntity<EmployeeResponse> updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
+    public ResponseEntity<BaseResponse> updateEmployee(@PathVariable int id, @RequestBody Employee employee) {
         try {
-            EmployeeResponse employeeResponse = this.employeeService.updateEmployee(id, employee);
-            employeeResponse.setMessage("Employee updated successfully");
-            final HttpStatus statusCode = employeeResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(employeeResponse, statusCode);
+           BaseResponse response = this.employeeService.updateEmployee(id, employee);
+            response.setMessage("'PUT method' received request ");
+            final HttpStatus statusCode = response.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+            return new ResponseEntity<>(response, statusCode);
         } catch (Exception ex) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
@@ -53,10 +55,10 @@ public class EmployeeController {
 
     @DeleteMapping("/employee/{id}")
     public ResponseEntity<EmployeeResponse> deleteEmployee(@PathVariable int id) {
-            this.employeeService.deleteEmployee(id);
-            EmployeeResponse employeeResponse = new EmployeeResponse(true);
-            employeeResponse.setMessage("Employee deleted successfully");
-            final HttpStatus statusCode = employeeResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
-            return new ResponseEntity<>(employeeResponse, statusCode);
+        this.employeeService.deleteEmployee(id);
+        EmployeeResponse employeeResponse = new EmployeeResponse(true);
+        employeeResponse.setMessage("'DELETE method' received request ");
+        final HttpStatus statusCode = employeeResponse.getSuccess() ? HttpStatus.OK : HttpStatus.BAD_REQUEST;
+        return new ResponseEntity<>(employeeResponse, statusCode);
     }
 }

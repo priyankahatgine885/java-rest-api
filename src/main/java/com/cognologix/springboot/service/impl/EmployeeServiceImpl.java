@@ -1,5 +1,6 @@
 package com.cognologix.springboot.service.impl;
 import com.cognologix.springboot.dao.EmployeeDao;
+import com.cognologix.springboot.dto.BaseResponse;
 import com.cognologix.springboot.dto.employee.EmployeeDTO;
 import com.cognologix.springboot.dto.employee.EmployeeListResponse;
 import com.cognologix.springboot.dto.employee.EmployeeResponse;
@@ -20,13 +21,14 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDao employeeDao;
 
     @Override
-    public EmployeeListResponse getEmployees() {
+    public BaseResponse getEmployees() {
         List<Employee> employeeList = employeeDao.findAll();
-        if(employeeList.isEmpty()) {
+        if(employeeList.size() == 0) {
             throw new EmptyListException("List is empty");
         }
-        return new EmployeeListResponse(employeeList, employeeList.size());
+        return new EmployeeListResponse(employeeList);
     }
+
 
     @Override
     public Employee getEmployeeById(int id) {
@@ -35,7 +37,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse addEmployee(@RequestBody EmployeeDTO employee)throws NameAlreadyExistException {
+    public BaseResponse addEmployee(@RequestBody EmployeeDTO employee)throws NameAlreadyExistException {
         if(employeeDao.findEmployeeByName(employee.getName()) != null){
             throw new NameAlreadyExistException("Employee Name already exist");
         }else{
@@ -44,7 +46,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public EmployeeResponse updateEmployee(int id, Employee employee)throws NullPointerException {
+    public BaseResponse updateEmployee(int id, Employee employee)throws NullPointerException {
         Employee employees = employeeDao.findById(id).get();
         if(employees == null){
             throw  new NullPointerException("Null Pointer Exception");
