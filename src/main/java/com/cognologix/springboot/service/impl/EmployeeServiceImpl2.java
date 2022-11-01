@@ -31,7 +31,13 @@ public class EmployeeServiceImpl2 implements EmployeeService2 {
     }
 
     @Override
-    public EmployeeResponse3 addEmployee(EmployeeDTO employee, String pathParam, String queryParam){
-        return new EmployeeResponse3(employee, pathParam, queryParam);
+    public EmployeeResponse3 addEmployee(@RequestBody EmployeeDTO employee, String pathParam, String queryParam){
+        EmployeeDTO employeeDTO = new EmployeeDTO();
+        employeeDTO.setId(employee.getId());
+        employeeDTO.setName(employee.getName());
+        employeeDTO.setSalary(employee.getSalary());
+        return new EmployeeResponse3(employeeDTO, pathParam, queryParam);
     }
 }
+
+
