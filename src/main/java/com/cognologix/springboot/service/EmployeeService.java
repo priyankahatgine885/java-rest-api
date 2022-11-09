@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 
 
 public interface EmployeeService {
-    BaseResponse getEmployees();
+    EmployeeListResponse getEmployees();
     Employee getEmployeeById(int id);
     BaseResponse addEmployee(EmployeeDTO employee);
     BaseResponse updateEmployee(int id, Employee employee);

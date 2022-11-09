@@ -2,6 +2,7 @@ package com.cognologix.springboot.controller;
 
 import com.cognologix.springboot.dto.BaseResponse;
 import com.cognologix.springboot.dto.employee.EmployeeDTO;
+import com.cognologix.springboot.dto.employee.EmployeeListResponse;
 import com.cognologix.springboot.dto.employee.EmployeeResponse;
 import com.cognologix.springboot.entities.Employee;
 import com.cognologix.springboot.exception.RecordNotFoundException;

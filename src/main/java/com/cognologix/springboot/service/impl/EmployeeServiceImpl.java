@@ -22,7 +22,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     private EmployeeDao employeeDao;
 
     @Override
-    public BaseResponse getEmployees() {
+    public EmployeeListResponse getEmployees() {
         List<Employee> employeeList = employeeDao.findAll();
         if(employeeList.size() == 0) {
             throw new EmptyListException("List is empty");

@@ -10,8 +10,10 @@ import java.util.List;
 @Setter
 public class EmployeeListResponse extends BaseResponse {
     private List<Employee> employeeList;
-    public EmployeeListResponse(List<Employee> e) {
+    private Integer size;
+    public EmployeeListResponse(List<Employee> e, Integer size) {
         super(true);
         this.employeeList = e;
+        this.size = size;
     }
 }
